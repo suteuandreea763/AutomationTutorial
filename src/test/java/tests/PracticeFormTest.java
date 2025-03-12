@@ -42,17 +42,18 @@ public class PracticeFormTest extends SharedData {
         emailElement.sendKeys(emailValue);
 
         String genderValue="Female";
-        List<WebElement> genderOptionsList=driver.findElements(By.xpath("//input[@name='gender']"));
+        By genderOptionsElement=By.xpath("//input[@name='gender']");
+        List<WebElement> genderOptionsList=driver.findElements(genderOptionsElement);
         if (genderValue.equals("Male")){
-           executor.executeScript("arguments[0].click();",genderOptionsList.get(0) );
+           elementHelper.clickJsLocator(genderOptionsList.get(0));
         }
 
         if (genderValue.equals("Female")) {
-            executor.executeScript("arguments[0].click();",genderOptionsList.get(1) );
+           elementHelper.clickJsLocator(genderOptionsList.get(1));
         }
 
         if (genderValue.equals("Other")) {
-            executor.executeScript("arguments[0].click();",genderOptionsList.get(2) );
+            elementHelper.clickJsLocator(genderOptionsList.get(2));
         }
 
        WebElement mobilePhoneElement= driver.findElement(By.xpath("//input[@placeholder='Mobile Number']"));
