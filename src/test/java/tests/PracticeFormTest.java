@@ -1,9 +1,7 @@
 package tests;
 
 import helpMethods.ElementHelper;
-import helpMethods.PageHelper;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import sharedData.SharedData;
@@ -16,161 +14,155 @@ public class PracticeFormTest extends SharedData {
 
 
     @Test
-    public void metodaTest () {
+    public void metodaTest() {
 
-        ElementHelper elementHelper=new ElementHelper(driver);
-       // JavascriptExecutor executor = (JavascriptExecutor) driver;
+        ElementHelper elementHelper = new ElementHelper(driver);
 
-        PageHelper pageHelper=new PageHelper(driver);
+        By formsMenu = By.xpath("//h5[text()='Forms']");
+        elementHelper.clickJSLocator(formsMenu);
 
-        By formsMenu=By.xpath("//h5[text()='Forms']");
-        elementHelper.clickJsLocator(formsMenu);
+        By practiceFormSubMenu = By.xpath("//span[text()='Practice Form']");
+        elementHelper.clickJSLocator(practiceFormSubMenu);
 
-        By practiceFormSubMenu=By.xpath("//span[text()='Practice Form']");
-        elementHelper.clickJsLocator(practiceFormSubMenu);
-
-        By firstNameElement=By.xpath("//input[@placeholder='First Name']");
-        String firstNameValue="Andreea";
+        By firstNameElement = By.xpath("//input[@placeholder='First Name']");
+        String firstNameValue = "Andreea";
         elementHelper.fillLocator(firstNameElement, firstNameValue);
 
-        WebElement lastNameElement=driver.findElement(By.xpath("//input[@placeholder='Last Name']"));
-        String lastNameValue="Carmen";
-        lastNameElement.sendKeys(lastNameValue);
+        By lastNameElement = By.xpath("//input[@placeholder='Last Name']");
+        String lastNameValue = "Suteu";
+        elementHelper.fillLocator(lastNameElement, lastNameValue);
 
-        WebElement emailElement=driver.findElement(By.xpath("//input[@placeholder='name@example.com']"));
-        String emailValue="suteuandreea@yahoo.ro";
-        emailElement.sendKeys(emailValue);
+        By emailElement = By.id("userEmail");
+        String emailValue = "andreea@gmail.com";
+        elementHelper.fillLocator(emailElement, emailValue);
 
-        String genderValue="Female";
-        By genderOptionsElement=By.xpath("//input[@name='gender']");
-        List<WebElement> genderOptionsList=driver.findElements(genderOptionsElement);
-        if (genderValue.equals("Male")){
-           elementHelper.clickJsLocator(genderOptionsList.get(0));
+
+        String genderValue = "Male";
+        By genderOptionsElement = By.xpath("//input[@name='gender']");
+        List<WebElement> genderOptionsList = driver.findElements(genderOptionsElement);
+        if (genderValue.equals("Male")) {
+            elementHelper.clickJSLocator(genderOptionsList.get(0));
         }
-
         if (genderValue.equals("Female")) {
-           elementHelper.clickJsLocator(genderOptionsList.get(1));
+            elementHelper.clickJSLocator(genderOptionsList.get(1));
         }
-
         if (genderValue.equals("Other")) {
-            elementHelper.clickJsLocator(genderOptionsList.get(2));
+            elementHelper.clickJSLocator(genderOptionsList.get(2));
         }
 
-       WebElement mobilePhoneElement= driver.findElement(By.xpath("//input[@placeholder='Mobile Number']"));
-        String mobilePhoneValue="0766345673";
-        mobilePhoneElement.sendKeys(mobilePhoneValue);
-        pageHelper.scrollByPixel(0,500);
+
+        By mobilePhoneElement = By.xpath("//input[@placeholder='Mobile Number']");
+        String mobilePhoneValue = "0745645112";
+        elementHelper.fillLocator(mobilePhoneElement, mobilePhoneValue);
+
+        By subjectsElement = By.id("subjectsInput");
+        elementHelper.clickJSLocator(subjectsElement);
 
 
-        By subjectsElement=By.id("subjectsInput");
-        elementHelper.clickJsLocator(subjectsElement);
+        //Trebuie sa facem o lista de Stringuri si sa adaugam elementele pe care vrem sa le adaugam
+        //Trebuie sa parcurgem lista pe care am facut-o cu un for
+        //In interiorul for-ului trebuie sa completez pe rand fiecare valoare in subjectElement si apoi sa apas un ENTER
 
-
-        //lista de string-uri si sa adaug elementele pe care vreau sa le selectez
-        //trebuie sa parcurg lista pe care am facut-o cu un for
-        //in interiorul for-ului trebuie sa completez pe rand fiecare valoare in subjectsElement si apoi sa apas un enter
-        List<String> subjects=new ArrayList<>();
+        List<String> subjects = new ArrayList<>();
         subjects.add("Maths");
         subjects.add("Arts");
         subjects.add("Biology");
+        subjects.add("Chemistry");
 
 
-        for (int index=0; index<subjects.size(); index++){
-            //subjectsElement.sendKeys(subjects.get(index));
-           // subjectsElement.sendKeys(Keys.ENTER);
-            elementHelper.fillPressLocator(subjectsElement,subjects.get(index),Keys.ENTER);
+        for (int index = 0; index < subjects.size(); index++) {
+//            subjectsElement.sendKeys(subjects.get(index));
+//            subjectsElement.sendKeys(Keys.ENTER);
+            elementHelper.fillPressLocator(subjectsElement, subjects.get(index), Keys.ENTER);
         }
 
-        List<String> hobbies=new ArrayList<>();
+
+        List<String> hobbies = new ArrayList<>();
         hobbies.add("Sports");
         hobbies.add("Reading");
         hobbies.add("Music");
 
+        List<WebElement> hobbiesOptionsList = driver.findElements(By.xpath("//div[@id='hobbiesWrapper']//label"));
+        for (int index = 0; index < hobbies.size(); index++) {
+            String currentText = hobbiesOptionsList.get(index).getText();
+            if (hobbies.contains(currentText)) {
+                elementHelper.clickJSLocator(hobbiesOptionsList.get(index));
+            }
 
-        List<WebElement> hobbiesOptionsList=driver.findElements(By.xpath("//div[@id='hobbiesWrapper']//label"));
-        for (int index=0; index<hobbiesOptionsList.size(); index++){
-           String currentText= hobbiesOptionsList.get(index).getText();
-           if (hobbies.contains(currentText)){
-               hobbiesOptionsList.get(index).click();
-           }
         }
 
-        By pictureElement=By.id("uploadPicture");
-        File file = new File("src/test/resources/52522714_265257021074795_1332014764607406080_n.jpg");
-       elementHelper.fillLocator(pictureElement,file.getAbsolutePath());
+        By pictureElement = By.id("uploadPicture");
+        File file = new File("52522714_265257021074795_1332014764607406080_n.jpg");
+        elementHelper.fillLocator(pictureElement, file.getAbsolutePath());
 
-        By CurrentAddressElement=By.id("currentAddress");
-        String CurrentAddressValue="Hunedoara,Hunedoara";
-        elementHelper.fillLocator(CurrentAddressElement,CurrentAddressValue);
+        By addressElement = By.id("currentAddress");
+        String addressValue = "strada libertatii";
+        elementHelper.fillLocator(addressElement, addressValue);
 
-        By StateElement=By.xpath("//div[text()='Select State']");
-        //executor.executeScript("arguments[0].click();", StateElement);
-        elementHelper.clickJsLocator(StateElement);
+        By stateElement = By.xpath("//div[text()='Select State']");
+        elementHelper.clickJSLocator(stateElement);
 
-        By StateInputElement=By.id("react-select-3-input");
-        String StateValue="NCR";
-        //StateInputElement.sendKeys(StateValue);
-       // StateInputElement.sendKeys(Keys.ENTER);
-        elementHelper.fillPressLocator(StateInputElement,StateValue,Keys.ENTER);
+        By stateInputElement = By.id("react-select-3-input");
+        String stateInputValue = "NCR";
+//        stateInputElement.sendKeys(stateInputValue);
+//        stateInputElement.sendKeys(Keys.ENTER);
+        elementHelper.fillPressLocator(stateInputElement, stateInputValue, Keys.ENTER);
 
-        By CityElement=By.xpath("//div[text()='Select City']");
-        //executor.executeScript("arguments[0].click();", CityElement);
-        elementHelper.clickJsLocator(CityElement);
+        By cityElement = By.xpath("//div[text()='Select City']");
+        elementHelper.clickJSLocator(cityElement);
 
-        By CityInputElement=By.id("react-select-4-input");
-        String CityValue="Delhi";
-        //CityInputElement.sendKeys(CityValue);
-        //CityInputElement.sendKeys(Keys.ENTER);
-        elementHelper.fillPressLocator(CityInputElement,CityValue,Keys.ENTER);
+        By cityInputElement = By.id("react-select-4-input");
+        String cityInputValue = "Delhi";
+//        cityInputElement.sendKeys(cityInputValue);
+//        cityInputElement.sendKeys(Keys.ENTER);
+        elementHelper.fillPressLocator(cityInputElement, cityInputValue, Keys.ENTER);
 
-        By SubmitButtonElement=By.id("submit");
-        //SubmitButtonElement.click();
-        //clickJSLocator se foloseste unde sunt reclame
-        elementHelper.clickLocator(SubmitButtonElement);
+        By submitElement = By.id("submit");
+        elementHelper.clickJSLocator(submitElement);
 
-        WebElement ThankYouElement= driver.findElement(By.id("example-modal-sizes-title-lg"));
-        String expectedMessage="Thanks for submitting the form";
-        String actualMessage= ThankYouElement.getText();
-        Assert.assertEquals(actualMessage,expectedMessage);
+        //pana aici am lucrat 26.02
 
-        List<WebElement> TableRowsList=driver.findElements(By.xpath("//tbody/tr"));
-        Assert.assertTrue(TableRowsList.get(0).getText().contains("Student Name"));
-        Assert.assertTrue(TableRowsList.get(0).getText().contains(firstNameValue));
-        Assert.assertTrue(TableRowsList.get(0).getText().contains(lastNameValue));
+        By thankyouElement = By.id("example-modal-sizes-title-lg");
+        String expectedMessage = "Thanks for submitting the form";
+        elementHelper.validateTextLocator(thankyouElement, expectedMessage);
+//        String actualMessage = thankyouElement.getText();
+//        Assert.assertEquals(actualMessage, expectedMessage);
+//        System.out.println("Testul a fost validat");
 
-        Assert.assertTrue(TableRowsList.get(1).getText().contains("Student Email"));
-        Assert.assertTrue(TableRowsList.get(1).getText().contains(emailValue));
+        By tablesRowsListElement = By.xpath("//tbody/tr");
+        List<WebElement> tablesRowsList = driver.findElements(tablesRowsListElement);
+        elementHelper.validateTextContainsElement(tablesRowsList.get(0), "Student Name");
+        elementHelper.validateTextContainsElement(tablesRowsList.get(0), firstNameValue);
+        elementHelper.validateTextContainsElement(tablesRowsList.get(0),lastNameValue);
 
-        Assert.assertTrue(TableRowsList.get(2).getText().contains("Gender"));
-        Assert.assertTrue(TableRowsList.get(2).getText().contains(genderValue));
+        elementHelper.validateTextContainsElement(tablesRowsList.get(1),"Student Email");
+        elementHelper.validateTextContainsElement(tablesRowsList.get(1), emailValue);
 
-        String subjectStringValue = String.join(", ", subjects);
-        Assert.assertTrue(TableRowsList.get(5).getText().contains("Subjects"));
-        Assert.assertTrue(TableRowsList.get(5).getText().contains(subjectStringValue));
+        elementHelper.validateTextContainsElement(tablesRowsList.get(2),"Gender");
+        elementHelper.validateTextContainsElement(tablesRowsList.get(2), genderValue);
 
-        String hobbiesStringValue = String.join(", ", hobbies);
-        Assert.assertTrue(TableRowsList.get(6).getText().contains("Hobbies"));
-        Assert.assertTrue(TableRowsList.get(6).getText().contains(hobbiesStringValue));
+        elementHelper.validateTextContainsElement(tablesRowsList.get(3),"Mobile");
+        elementHelper.validateTextContainsElement(tablesRowsList.get(3), mobilePhoneValue);
 
-        Assert.assertTrue(TableRowsList.get(8).getText().contains("Address"));
-        Assert.assertTrue(TableRowsList.get(8).getText().contains(CurrentAddressValue));
+        elementHelper.validateTextContainsElement(tablesRowsList.get(5),"Subjects");
+        elementHelper.validateTextContainsElement(tablesRowsList.get(5),"Maths");
+        elementHelper.validateTextContainsElement(tablesRowsList.get(5),"Arts");
+        elementHelper.validateTextContainsElement(tablesRowsList.get(5),"Biology");
+        elementHelper.validateTextContainsElement(tablesRowsList.get(5),"Chemistry");
 
-        Assert.assertTrue(TableRowsList.get(3).getText().contains("Mobile"));
-        Assert.assertTrue(TableRowsList.get(3).getText().contains(mobilePhoneValue));
+        elementHelper.validateTextContainsElement(tablesRowsList.get(6),"Hobbies");
+        elementHelper.validateTextContainsElement(tablesRowsList.get(6),"Sports");
+        elementHelper.validateTextContainsElement(tablesRowsList.get(6),"Reading");
 
-        Assert.assertTrue(TableRowsList.get(7).getText().contains("Picture"));
-        Assert.assertTrue(TableRowsList.get(7).getText().contains("52522714_265257021074795_1332014764607406080_n.jpg"));
+        elementHelper.validateTextContainsElement(tablesRowsList.get(7),"Picture");
+        elementHelper.validateTextContainsElement(tablesRowsList.get(7),"52522714_265257021074795_1332014764607406080_n.jpg");
 
-        List<WebElement> RowsList=driver.findElements(By.xpath("//tbody/tr"));
-        Assert.assertTrue(TableRowsList.get(9).getText().contains("State and City"));
-        Assert.assertTrue(TableRowsList.get(9).getText().contains(StateValue));
-        Assert.assertTrue(TableRowsList.get(9).getText().contains(CityValue));
+        elementHelper.validateTextContainsElement(tablesRowsList.get(8),"Address");
+        elementHelper.validateTextContainsElement(tablesRowsList.get(8), addressValue);
 
-        
-
-
-
-
-
+        elementHelper.validateTextContainsElement(tablesRowsList.get(9),"State and City");
+        elementHelper.validateTextContainsElement(tablesRowsList.get(9), stateInputValue);
+        elementHelper.validateTextContainsElement(tablesRowsList.get(9), cityInputValue);
     }
+
 }

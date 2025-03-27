@@ -1,6 +1,104 @@
+//package tests;
+//
+//import helpMethods.ElementHelper;
+//import org.openqa.selenium.By;
+//import org.openqa.selenium.JavascriptExecutor;
+//import org.openqa.selenium.WebDriver;
+//import org.openqa.selenium.WebElement;
+//import org.openqa.selenium.chrome.ChromeDriver;
+//import org.testng.annotations.Test;
+//import sharedData.SharedData;
+//
+//import java.time.Duration;
+//
+//public class FrameTest extends SharedData {
+//
+//
+//    @Test
+//    public void metodaTest () {
+//
+//       // JavascriptExecutor executor = (JavascriptExecutor) driver;
+//        ElementHelper elementHelper=new ElementHelper(driver);
+//
+//
+//        By FramesWindowsMenu = By.xpath("//h5[text()='Alerts, Frame & Windows']");
+//        //executor.executeScript("arguments[0].click();", FramesWindowsMenu);
+//        elementHelper.clickJsLocator(FramesWindowsMenu);
+//
+//        By framesSubmenu = By.xpath("//span[text()='Frames']");
+//       // executor.executeScript("arguments[0].click();", framesSubmenu);
+//        elementHelper.clickJsLocator(framesSubmenu);
+//
+//        driver.switchTo().frame("frame1");
+//
+//        By textElement =By.id("sampleHeading");
+//        //System.out.println(textElement.getText());
+//        System.out.println(driver.findElement(textElement).getText());
+//
+//
+//        driver.switchTo().parentFrame();
+//
+//        driver.switchTo().frame("frame2");
+//
+//        By textElement2=By.id("sampleHeading");
+//        //System.out.println(textElement2.getText());
+//        System.out.println(driver.findElement(textElement2).getText());
+//
+//
+//
+//    }
+//}
+//
+//package tests;
+//
+//import helpMethods.ElementHelper;
+//import helpMethods.TabWindowHelper;
+//import org.openqa.selenium.By;
+//import org.openqa.selenium.JavascriptExecutor;
+//import org.openqa.selenium.WebDriver;
+//import org.openqa.selenium.WebElement;
+//import org.openqa.selenium.chrome.ChromeDriver;
+//import org.testng.annotations.Test;
+//import sharedData.SharedData;
+//
+//import java.time.Duration;
+//
+//public class FrameTest extends SharedData {
+//
+//
+//    @Test
+//    public void metodaTest() {
+//
+//        TabWindowHelper tabWindowHelper = new TabWindowHelper(driver);
+//        ElementHelper elementHelper = new ElementHelper(driver);
+//
+////        JavascriptExecutor executor = (JavascriptExecutor) driver;
+//
+//        By frameMenu = By.xpath("//h5[text()='Alerts, Frame & Windows']");
+//        elementHelper.clickJSLocator(frameMenu);
+//
+//        By frameSubMenu = By.xpath("//span[text()='Frames']");
+//        elementHelper.clickJSLocator(frameSubMenu);
+//
+////        driver.switchTo().frame("frame1");
+//        tabWindowHelper.switchToSpecificTabWindow2("frame1");
+//
+//        WebElement textElement = driver.findElement(By.id("sampleHeading"));
+//        System.out.println(textElement.getText());
+//
+//        driver.switchTo().parentFrame();
+//        driver.switchTo().frame("frame2");
+//
+//        WebElement textElement2 = driver.findElement(By.id("sampleHeading"));
+//        System.out.println(textElement2.getText());
+//
+//    }
+//}
+
 package tests;
 
 import helpMethods.ElementHelper;
+import helpMethods.TabWindowHelper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -15,37 +113,30 @@ public class FrameTest extends SharedData {
 
 
     @Test
-    public void metodaTest () {
+    public void metodaTest() {
 
-       // JavascriptExecutor executor = (JavascriptExecutor) driver;
-        ElementHelper elementHelper=new ElementHelper(driver);
+        TabWindowHelper tabWindowHelper = new TabWindowHelper(driver);
+        ElementHelper elementHelper = new ElementHelper(driver);
 
+//        JavascriptExecutor executor = (JavascriptExecutor) driver;
 
-        By FramesWindowsMenu = By.xpath("//h5[text()='Alerts, Frame & Windows']");
-        //executor.executeScript("arguments[0].click();", FramesWindowsMenu);
-        elementHelper.clickJsLocator(FramesWindowsMenu);
+        By frameMenu = By.xpath("//h5[text()='Alerts, Frame & Windows']");
+        elementHelper.clickJSLocator(frameMenu);
 
-        By framesSubmenu = By.xpath("//span[text()='Frames']");
-       // executor.executeScript("arguments[0].click();", framesSubmenu);
-        elementHelper.clickJsLocator(framesSubmenu);
+        By frameSubMenu = By.xpath("//span[text()='Frames']");
+        elementHelper.clickJSLocator(frameSubMenu);
 
-        driver.switchTo().frame("frame1");
+//        driver.switchTo().frame("frame1");
+        tabWindowHelper.switchToSpecificTabWindow2("frame1");
 
-        By textElement =By.id("sampleHeading");
-        //System.out.println(textElement.getText());
-        System.out.println(driver.findElement(textElement).getText());
-
+        WebElement textElement = driver.findElement(By.id("sampleHeading"));
+        System.out.println(textElement.getText());
 
         driver.switchTo().parentFrame();
-
         driver.switchTo().frame("frame2");
 
-        By textElement2=By.id("sampleHeading");
-        //System.out.println(textElement2.getText());
-        System.out.println(driver.findElement(textElement2).getText());
-
-
+        WebElement textElement2 = driver.findElement(By.id("sampleHeading"));
+        System.out.println(textElement2.getText());
 
     }
 }
-

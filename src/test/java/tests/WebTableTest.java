@@ -1,8 +1,9 @@
 package tests;
 
 import helpMethods.ElementHelper;
-import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
+import helpMethods.TabWindowHelper;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import sharedData.SharedData;
@@ -13,148 +14,113 @@ public class WebTableTest extends SharedData {
 
 
     @Test
-    public void metodaTest () {
+    public void metodaTest() {
 
-        //JavascriptExecutor executor = (JavascriptExecutor) driver;
-        ElementHelper elementHelper=new ElementHelper(driver);
+        ElementHelper elementHelper = new ElementHelper(driver);
 
-
-        By elementsMenu=By.xpath("//h5[text()='Elements']");
-        //executor.executeScript("arguments[0].click();", elementsMenu);
-        elementHelper.clickJsLocator(elementsMenu);
-
-        By webTableSubMenu=By.xpath("//span[text()='Web Tables']");
-        elementHelper.clickJsLocator(webTableSubMenu);
-
-
-        List<WebElement> tablesRowsList= driver.findElements(By.xpath("//div[@class='rt-tbody']/div/div[@class='rt-tr -even' or @class='rt-tr -odd']"));
-        Assert.assertEquals(tablesRowsList.size(),3,"valoarea initiala a tebelului nu este 3");
+//        //deschidem un browser
+//        driver = new ChromeDriver();
+//
+//        //accesam o pagina Web
+//        driver.get("https://demoqa.com");
+//
+//        //facem browserul in modul maximaze
+//        driver.manage().window().maximize();
+//
+//        JavascriptExecutor executor = (JavascriptExecutor) driver;
 
 
+        By elementsMenu = By.xpath("//h5[text()='Elements']");
+        elementHelper.clickJSLocator(elementsMenu);
 
-        //identificam un element
+        By webTablesSubMenu = By.xpath("//span[text()='Web Tables']");
+        elementHelper.clickJSLocator(webTablesSubMenu);
+
+        By tablesRowListElement = By.xpath("//div[@class='rt-tbody']/div/div[@class='rt-tr -even' or @class='rt-tr -odd']");
+        List<WebElement> tablesRowList = driver.findElements(tablesRowListElement);
+        Assert.assertEquals(tablesRowList.size(), 3, "Valoarea initiala a tabelului nu este 3");
+
+
+        //indentificam un element
         By addElement = By.id("addNewRecordButton");
-        //executor.executeScript("arguments[0].click();", addElement);
-        elementHelper.clickJsLocator(addElement);
+        elementHelper.clickJSLocator(addElement);
 
+        //JavascriptExecutor folosit pentru erori click intercepted (reclame)
+        //nu trebuie abuzat de acest lucru, deoarece el forteaza lucrurile
 
         By firstNameElement = By.id("firstName");
-        String firstNameValue = "Suteu";
-        //firstNameElement.sendKeys(firstNameValue);
-        elementHelper.fillPressLocator(firstNameElement,firstNameValue, Keys.ENTER);
-
+        String firstNameValue = "Razvan";
+        elementHelper.fillLocator(firstNameElement, firstNameValue);
 
         By lastNameElement = By.id("lastName");
-        String lastNameValue = "Andreea";
-        //lastNameElement.sendKeys(lastNameValue);
-        elementHelper.fillPressLocator(lastNameElement,lastNameValue, Keys.ENTER);
-
+        String lastNameValue = "Gherasa";
+        elementHelper.fillLocator(lastNameElement, lastNameValue);
 
         By userEmailElement = By.id("userEmail");
-        String userEmailValue = "suteuandreea763@yahoo.ro";
-       // userEmailElement.sendKeys(userEmailValue);
-        elementHelper.fillPressLocator(userEmailElement,userEmailValue, Keys.ENTER);
-
+        String userEmailValue = "razvan@gmail.com";
+        elementHelper.fillLocator(userEmailElement, userEmailValue);
 
         By ageElement = By.id("age");
-        String ageValue = "24";
-        //ageElement.sendKeys(ageValue);
-        elementHelper.fillPressLocator(ageElement,ageValue, Keys.ENTER);
+        String ageValue = "25";
+        elementHelper.fillLocator(ageElement, ageValue);
 
+        By salaryElement = By.id("salary");
+        String salaryValue = "3000";
+        elementHelper.fillLocator(salaryElement, salaryValue);
 
-        //WebElement salaryElement = driver.findElement(By.id("salary"));
-        By salaryElement =By.id("salary");
-        String salaryValue = "10000";
-       // salaryElement.sendKeys(salaryValue);
-        elementHelper.fillPressLocator(salaryElement,salaryValue, Keys.ENTER);
-
-
-        By departmentElement =By.id("department");
-        String departmentValue = "qa";
-        //departmentElement.sendKeys(departmentValue);
-        elementHelper.fillPressLocator(departmentElement,departmentValue, Keys.ENTER);
-
+        By departmentElement = By.id("department");
+        String departmentValue = "it";
+        elementHelper.fillLocator(departmentElement, departmentValue);
 
         By submitElement = By.id("submit");
-        //executor.executeScript("arguments [0].click();", submitElement);
-        elementHelper.clickJsLocator(submitElement);
+        elementHelper.clickJSLocator(submitElement);
 
+        tablesRowList = driver.findElements(tablesRowListElement);
+        Assert.assertEquals(tablesRowList.size(), 4, "Valoarea actuala a tabelului nu este 4");
+        elementHelper.validateTextContainsElement(tablesRowList.get(3),firstNameValue);
+        elementHelper.validateTextContainsElement(tablesRowList.get(3),lastNameValue);
+        elementHelper.validateTextContainsElement(tablesRowList.get(3),userEmailValue);
+        elementHelper.validateTextContainsElement(tablesRowList.get(3),ageValue);
+        elementHelper.validateTextContainsElement(tablesRowList.get(3),salaryValue);
+        elementHelper.validateTextContainsElement(tablesRowList.get(3),departmentValue);
 
-         tablesRowsList= driver.findElements(By.xpath("//div[@class='rt-tbody']/div/div[@class='rt-tr -even' or @class='rt-tr -odd']"));
-        Assert.assertEquals(tablesRowsList.size(),4,"valoarea actuala a tebelului nu este 4");
-        String expectedRow= tablesRowsList.get(3).getText();
-        Assert.assertTrue(expectedRow.contains(firstNameValue));
-        Assert.assertTrue(expectedRow.contains(lastNameValue));
-        Assert.assertTrue(expectedRow.contains(ageValue));
-        Assert.assertTrue(expectedRow.contains(userEmailValue));
-        Assert.assertTrue(expectedRow.contains(salaryValue));
-        Assert.assertTrue(expectedRow.contains(departmentValue));
 
         //edit functionality
-       // WebElement editElement = driver.findElement(By.id("edit-record-4"));
         By editElement = By.id("edit-record-4");
-        //executor.executeScript("arguments[0].click();", editElement);
-        elementHelper.clickJsLocator(editElement);
+        elementHelper.clickJSLocator(editElement);
 
         By editFirstNameElement = By.id("firstName");
-        String editFirstNameValue = "Popescu";
-        //editFirstNameElement.clear();
-       // editFirstNameElement.sendKeys(editFirstNameValue);
-        elementHelper.fillPressLocator(editFirstNameElement,editFirstNameValue, Keys.ENTER);
+        String editFirstNameValue = "Andrei";
+        elementHelper.clearFilledLocator(editFirstNameElement, editFirstNameValue);
 
+        By editLastNameElement = By.id("lastName");
+        String editLastNameValue = "Mihai";
+        elementHelper.clearFilledLocator(editLastNameElement, editLastNameValue);
 
-        By editlastNameElement = By.id("lastName");
-        String editlastNameValue = "Ion";
-//        editlastNameElement.clear();
-//        editlastNameElement.sendKeys(editlastNameValue);
-        elementHelper.fillPressLocator(editlastNameElement,editlastNameValue, Keys.ENTER);
+        By editUserEmailElement = By.id("userEmail");
+        String editUserEmailValue = "amihai@gmail.com";
+        elementHelper.clearFilledLocator(editUserEmailElement, editUserEmailValue);
 
-        By edituserEmailElement = By.id("userEmail");
-        String edituserEmailValue = "ion12@yahoo.ro";
-//        edituserEmailElement.clear();
-//        edituserEmailElement.sendKeys(edituserEmailValue);
-        elementHelper.fillPressLocator(edituserEmailElement,edituserEmailValue, Keys.ENTER);
+        By editAgeElement = By.id("age");
+        String editAgeValue = "30";
+        elementHelper.clearFilledLocator(editAgeElement, editAgeValue);
 
-        By editageElement = By.id("age");
-        String editageValue = "19";
-//        editageElement.clear();
-//        editageElement.sendKeys(editageValue);
-        elementHelper.fillPressLocator(editageElement,editageValue, Keys.ENTER);
+        By editSalaryElement = By.id("salary");
+        String editSalaryValue = "9000";
+        elementHelper.clearFilledLocator(editSalaryElement, editSalaryValue);
 
-        By editsalaryElement = By.id("salary");
-        String editsalaryValue = "9000";
-//        editsalaryElement.clear();
-//        editsalaryElement.sendKeys(editsalaryValue);
-        elementHelper.fillPressLocator(editsalaryElement,editsalaryValue, Keys.ENTER);
+        By editDepartmentElement = By.id("department");
+        String editDepartmentValue = "Marketing";
+        elementHelper.clearFilledLocator(editDepartmentElement, editDepartmentValue);
 
-        By editdepartmentElement = By.id("department");
-        String editdepartmentValue = "it";
-//        editdepartmentElement.clear();
-//        editdepartmentElement.sendKeys(editdepartmentValue);
-        elementHelper.fillPressLocator(editdepartmentElement,editdepartmentValue, Keys.ENTER);
+        By resubmitElement = By.id("submit");
+        elementHelper.clickJSLocator(resubmitElement);
 
+        By deleteElement=By.id("delete-record-4");
+        elementHelper.clickJSLocator(deleteElement);
 
-        By submitEditedElement = By.id("submit");
-       // executor.executeScript("arguments[0].click();", submitEditedElement);
-        elementHelper.clickJsLocator(submitEditedElement);
-
-        tablesRowsList= driver.findElements(By.xpath("//div[@class='rt-tbody']/div/div[@class='rt-tr -even' or @class='rt-tr -odd']"));
-        Assert.assertEquals(tablesRowsList.size(),4,"valoarea actuala a tebelului nu este 4");
-        expectedRow= tablesRowsList.get(3).getText();
-        Assert.assertTrue(expectedRow.contains(editFirstNameValue));
-        Assert.assertTrue(expectedRow.contains(editlastNameValue));
-        Assert.assertTrue(expectedRow.contains(editageValue));
-        Assert.assertTrue(expectedRow.contains(edituserEmailValue));
-        Assert.assertTrue(expectedRow.contains(editsalaryValue));
-        Assert.assertTrue(expectedRow.contains(editdepartmentValue));
-
-
-        tablesRowsList= driver.findElements(By.xpath("//div[@class='rt-tbody']/div/div[@class='rt-tr -even' or @class='rt-tr -odd']"));
-        Assert.assertEquals(tablesRowsList.size(),4,"valoarea actuala a tebelului nu este 4");
-
-
-
-
+        tablesRowList = driver.findElements(tablesRowListElement);
+        Assert.assertEquals(tablesRowList.size(), 3, "Valoarea actuala a tabelului nu este 4.");
 
     }
 }

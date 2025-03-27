@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.Test;
+import pages.IndexPage;
 import sharedData.SharedData;
 
 import java.time.Duration;
@@ -19,34 +20,44 @@ public class BrowserWindowTest extends SharedData {
     @Test
     public void metodaTest() {
 
-        TabWindowHelper tabWindowHelper=new TabWindowHelper(driver);
-        ElementHelper elementHelper= new ElementHelper(driver);
+        //obiect de tipul TabWindowHelper; similar cu cel de la Masini
+        TabWindowHelper tabWindowHelper = new TabWindowHelper(driver);
 
+        ElementHelper elementHelper = new ElementHelper(driver);
 
-        By alertFrameWindowsMenu = By.xpath("//h5[text()='Alerts, Frame & Windows']");
-        elementHelper.clickJsLocator(alertFrameWindowsMenu);
+        IndexPage indexPage = new IndexPage(driver);
+        indexPage.enterOnAlertFrameWindowMenu();
 
-        By browserWindowsSubmenu = By.xpath("//span[text()='Browser Windows']");
-        elementHelper.clickLocator(browserWindowsSubmenu);
+        By browserSubMenu = By.xpath("//span[text()='Browser Windows']");
+        elementHelper.clickJSLocator(browserSubMenu);
 
-        By newTabClick = By.id("tabButton");
-        elementHelper.clickLocator(newTabClick);
+        By tabButtonElement = By.id("tabButton");
+        elementHelper.clickJSLocator(tabButtonElement);
 
         System.out.println(driver.getCurrentUrl());
 
+//        List<String> tabs = new ArrayList<>(driver.getWindowHandles());
+//        driver.switchTo().window(tabs.get(1));
         tabWindowHelper.switchToSpecificTabWindow(1);
 
         System.out.println(driver.getCurrentUrl());
+
+        //inchide tab-ul curent
+//        driver.close();
 
         tabWindowHelper.closeCurrentTabWindow();
 
+//        driver.switchTo().window(tabs.get(0));
         tabWindowHelper.switchToSpecificTabWindow(0);
+        By windowButtonElement = By.id("windowButton");
+        elementHelper.clickJSLocator(windowButtonElement);
 
-        By newWindowClick= By.id("windowButton");
-       elementHelper.clickLocator(newWindowClick);
+        //pentru a ramane deschise ambele taburi
+//        List<String> windows = new ArrayList<>(driver.getWindowHandles());
+//        driver.switchTo().window(windows.get(1));
 
         tabWindowHelper.switchToSpecificTabWindow(1);
 
-        System.out.println(driver.getCurrentUrl());
+
     }
 }
