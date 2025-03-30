@@ -6,4 +6,6 @@ public class IndexLocators {
 
    public static final By alertsFrameWindowsMenu = By.xpath("//h5[text()='Alerts, Frame & Windows']");
     public static final By alertsSubMenu = By.xpath("//span[text()='Alerts']");
+    public static final By browserSubMenu = By.xpath("//span[text()='Browser Windows']");
+    public static final  By frameSubMenu = By.xpath("//span[text()='Frames']");
 }

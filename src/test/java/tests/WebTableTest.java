@@ -49,23 +49,23 @@ public class WebTableTest extends SharedData {
         //nu trebuie abuzat de acest lucru, deoarece el forteaza lucrurile
 
         By firstNameElement = By.id("firstName");
-        String firstNameValue = "Razvan";
+        String firstNameValue = "Andreea";
         elementHelper.fillLocator(firstNameElement, firstNameValue);
 
         By lastNameElement = By.id("lastName");
-        String lastNameValue = "Gherasa";
+        String lastNameValue = "Suteu";
         elementHelper.fillLocator(lastNameElement, lastNameValue);
 
         By userEmailElement = By.id("userEmail");
-        String userEmailValue = "razvan@gmail.com";
+        String userEmailValue = "andreea@gmail.com";
         elementHelper.fillLocator(userEmailElement, userEmailValue);
 
         By ageElement = By.id("age");
-        String ageValue = "25";
+        String ageValue = "24";
         elementHelper.fillLocator(ageElement, ageValue);
 
         By salaryElement = By.id("salary");
-        String salaryValue = "3000";
+        String salaryValue = "4500";
         elementHelper.fillLocator(salaryElement, salaryValue);
 
         By departmentElement = By.id("department");

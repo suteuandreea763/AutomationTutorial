@@ -37,7 +37,7 @@ public class PracticeFormTest extends SharedData {
         elementHelper.fillLocator(emailElement, emailValue);
 
 
-        String genderValue = "Male";
+        String genderValue = "Female";
         By genderOptionsElement = By.xpath("//input[@name='gender']");
         List<WebElement> genderOptionsList = driver.findElements(genderOptionsElement);
         if (genderValue.equals("Male")) {
