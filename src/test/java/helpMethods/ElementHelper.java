@@ -3,7 +3,6 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
 import java.time.Duration;
 
 public class ElementHelper {
@@ -24,8 +23,6 @@ public class ElementHelper {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOf(locator));
     }
-
-
 
     public void clickLocator(By locator){
         waitForElementVisible(locator);
@@ -70,6 +67,11 @@ public class ElementHelper {
         waitForElementVisible(locator);
         driver.findElement(locator).clear();
         driver.findElement(locator).sendKeys(text);
-
     }
+
+    public void waitForElementsVisible(By locator){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+    }
+
 }
